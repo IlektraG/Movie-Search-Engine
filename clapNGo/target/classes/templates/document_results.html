@@ -1,0 +1,240 @@
+<!doctype html>
+<html xmlns:th="http://www/thymeleaf.org">
+<html dir="ltr" lang="el">
+  <head>
+    <meta charset="utf-8">
+    <title th:text="${document[0]}"></title>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <body>
+
+	<style>
+	    .center {
+		  width: 300px;
+		  height: 300px;
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+			}
+
+
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+	body{
+	    #backgroundImage {
+	        border: none;
+	        height: 20%;
+	        pointer-events: none;
+	        position: fixed;
+	        top: 0;
+	        visibility: hidden;
+	        width: 20%;
+	     }
+    }
+
+	.center {
+      width: 100px;
+      height: 100px;
+	  display: block;
+	  margin-left: 200px;
+	  margin-right: 200px;
+		}
+
+	body{   
+		background-image: linear-gradient(to right , #E0E0E0 , #ef473a);
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	.search {
+	  width: 100%;
+	  position: angular;
+	  display: flex;
+	}
+
+	.searchTerm {
+	  width: 100%;
+	  border: 3px solid #000000;
+	  border-right: none;
+	  padding: 5px;
+	  height: 20px;
+	  border-radius: 5px 0 0 5px;
+	  outline: none;
+	  color: #606060;
+	}
+
+	.searchTerm:focus{
+	  color: black;
+	}
+
+	.searchButton {
+	  width: 40px;
+	  height: 36px;
+	  border: 1px solid black;
+	  background: black;
+	  text-align: center;
+	  color: #fff;
+	  border-radius: 0 5px 5px 0;
+	  cursor: pointer;
+	  font-size: 20px;
+	}
+
+	/*Resize the wrap to see the search bar change!*/
+	.wrap{
+	  width: 30%;
+	  position: absolute;
+	  top: 5%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	}
+
+	input {
+		accent-color: black;
+	}
+	
+	a {
+	  text-decoration: none;
+	  display: inline-block;
+	  padding: 8px 16px;
+	}
+
+	a:hover {
+	  background-image:  linear-gradient(to right , #cb2d3e , #ef473a);
+	  color: black;
+	}
+
+	.previous {
+	  background-color: #EE3636;
+	  color: black;
+	}
+
+	.next {
+	  background-color: #EE3636;
+	  color: white;
+	}
+
+	.round {
+	  border-radius: 50%;
+	}
+	
+	.myButton {
+    position: absolute;
+    left:15%;
+	color: red;
+    background-color:red;
+}
+
+#example1 {
+  padding: 25px;
+  background-color: linear-gradient(to right , #cb2d3e , #ef473a);
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+	.br {
+		display: block;
+		margin-bottom: 0em;
+	}
+	
+	h2 {
+		font-family: 'Courier New', monospace;
+	}
+	
+	.text {
+    position: absolute;
+    top: 5%; 
+    right: 50%;
+    transform: translate(50%,-50%);
+    text-transform: uppercase;
+    font-family: verdana;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: #465150;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
+}
+	</style>
+
+<center class="text"><h2 th:text="${document[0]}"/></center></br>
+
+</br></br></br></br></br></br></br>
+<p style="font-size:20px; position:angular; left:80px;"><u>Original Title of movie</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[1]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Genres of movie</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[2]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Keywords</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[3]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Tagline of movie</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[4]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Overview of movie</u></p>
+<p class="br" style = "position:angular; left:20px;" th:text="${document[5]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Runtime of movie</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[6]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Release date of movie</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[7]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Homepage of movie</u></p>
+<a th:href="${document[8]}" class="br" style = "position:angular; left:100px; width:600px" th:text="${document[8]}"/></br>
+
+
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Original Language</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[9]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Spoken Languages</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[10]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Production countries</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[11]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Production Companies</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[12]}"/></br>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Budget</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[13]}"/>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Revenue</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[14]}"/>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Vote count</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[15]}"/>
+
+<p style="font-size:20px; position:angular; left:80px;"><u>Vote average</u></p>
+<p class="br" style = "position:angular; left:100px;" th:text="${document[16]}"/>
+
+
+<!-- <div ng-app="myApp" ng-controller="myCtrl">
+
+Full Name: {{firstName + " " + lastName}}
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstName = "Jonh";
+    $scope.lastName = "Doe";
+});
+</script>
+
+<p>This example shows how to define a controller, and how to use variables made for the scope.</p> -->
+
+</body>
+</html>

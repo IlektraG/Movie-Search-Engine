@@ -1,0 +1,418 @@
+<!doctype html>
+<html xmlns:th="http://www/thymeleaf.org">
+<html dir="ltr" lang="el">
+  <head>
+    <meta charset="utf-8">
+    <title>Results</title>
+  </head>
+  <body>
+
+	<style>
+	    .center {
+		  width: 300px;
+		  height: 300px;
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+			}
+
+
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+	body{
+	    #backgroundImage {
+	        border: none;
+	        height: 20%;
+	        pointer-events: none;
+	        position: fixed;
+	        top: 0;
+	        visibility: hidden;
+	        width: 20%;
+	     }
+    }
+
+	.center {
+      width: 100px;
+      height: 100px;
+	  display: block;
+	  margin-left: 200px;
+	  margin-right: 200px;
+		}
+
+	body{   
+		background-image: linear-gradient(to right , #E0E0E0 , #ef473a);
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	.search {
+	  width: 100%;
+	  position: relative;
+	  display: flex;
+	}
+
+	.searchTerm {
+	  width: 100%;
+	  border: 3px solid #000000;
+	  border-right: none;
+	  padding: 5px;
+	  height: 20px;
+	  border-radius: 5px 0 0 5px;
+	  outline: none;
+	  color: #606060;
+	}
+
+	.searchTerm:focus{
+	  color: black;
+	}
+
+	.searchButton {
+	  width: 40px;
+	  height: 36px;
+	  border: 1px solid black;
+	  background: black;
+	  text-align: center;
+	  color: #fff;
+	  border-radius: 0 5px 5px 0;
+	  cursor: pointer;
+	  font-size: 20px;
+	}
+
+	/*Resize the wrap to see the search bar change!*/
+	.wrap{
+	  width: 30%;
+	  position: absolute;
+	  top: 5%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	}
+
+	input {
+		accent-color: black;
+	}
+	
+	a {
+	  text-decoration: none;
+	  display: inline-block;
+	  padding: 8px 16px;
+	}
+
+	a:hover {
+	  background-image:  linear-gradient(to right , #cb2d3e , #ef473a);
+	  color: black;
+	}
+
+	.previous {
+	  background-color: #EE3636;
+	  color: black;
+	}
+
+	.next {
+	  background-color: #EE3636;
+	  color: white;
+	}
+
+	.round {
+	  border-radius: 50%;
+	}
+	
+	.myButton {
+    position: absolute;
+    left:15%;
+	color: red;
+    background-color:red;
+}
+
+#example1 {
+  padding: 25px;
+  background-color: linear-gradient(to right , #cb2d3e , #ef473a);;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.sortButton {
+	box-shadow:inset 0px 0px 14px -3px #f2fadc;
+	background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);
+	background-color:#dbe6c4;
+	border-radius:6px;
+	border:1px solid #b2b8ad;
+	display:inline-block;
+	cursor:pointer;
+	color:#757d6f;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ced9bf;
+}
+.sortButton:hover {
+	background:linear-gradient(to bottom , #cb2d3e , #ef473a);
+	background-color:#9ba892;
+}
+.sortButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  left:
+  width: 200px;
+  height: 100px;
+}
+.highlight {
+  background-color: yellow;
+}
+	</style>
+	
+
+<body onload="hightLight()">
+<div style="background-color=linear-gradient(to right , #cb2d3e , #ef473a);">
+<a th:href = "@{/clapNGo}" ><img src="http://www.clker.com/cliparts/b/b/0/c/1195431703233884825Stellaris_Clapper-board.svg.med.png" alt="me" class="center"></img></a>
+<!--<a type="button" th:href = "@{/movieSearcher}" class="myButton" id="close-image"><img align="center" src="http://www.clker.com/cliparts/b/b/0/c/1195431703233884825Stellaris_Clapper-board.svg.med.png" height="40%" width="30%"></a>-->
+  <form th:action = "@{/results}" th:object="${searcher}">
+  <div align="center">
+	<input type="radio" id="None" name="default" th:field="*{search_options}" value="None" checked required="required">
+	<label>None</label>
+	<input type="radio" id="Title" name="default" value="Title" th:field="*{search_options}" checked required="required">
+	<label>Title</label>
+	<input type="radio" id="Genres" name="default" value="Genres" th:field="*{search_options}" checked required="required">
+	<label>Genres</label>
+	<input type="radio" id="Keywords" name="default" value="Keywords" th:field="*{search_options}" checked required="required">
+	<label>Keywords</label>
+	<input type="radio" id="Overview" name="default" value="Overview" th:field="*{search_options}" checked required="required">
+	<label>Overview</label>
+	<input type="radio" id="Released date" name="default" value="Released date" th:field="*{search_options}" checked required="required">
+	<label>Released date</label>
+ </div>
+ <div class="wrap">
+   <div class="search">
+   	
+      <input type="text" id="searcher" class="searchTerm" th:field="*{search_movie}" th:value="*{search_movie}" placeholder="Search movie" required="required">
+      <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+     </button>
+   
+   </div>
+</div>
+
+
+<form th:action = "@{/results}" th:object="${searcher}">
+		<select th:field="*{search_order}">
+			<option th:id="${order[0][1]}" th:value="${order[0][1]}" th:text="${order[0][0]}"></option>
+			<option th:id="${order[1][1]}" th:value="${order[1][1]}" th:text="${order[1][0]}"></option>
+			<option th:id="${order[2][1]}" th:value="${order[2][1]}" th:text="${order[2][0]}"></option>
+			<option th:id="${order[3][1]}" th:value="${order[3][1]}" th:text="${order[3][0]}"></option>
+		</select>
+	<button type="submit" class="sortButton">Sort</button>
+	</br></br></br>
+</form>
+
+
+<!--<div  style="background-color:white-space;" th:each="eachResult : ${results}">
+  <a th:href="@{/documentResults(document = ${eachResult})}" th:text="${eachResult[0]}" />
+  <p th:text="${eachResult[5]}" />
+</div>-->
+
+<!--<a th:href="@{/more_results(searcher = ${searcher}, movies_index=${movies_index})}" class="btn btn-info btn-sm">NEXT</a></br> -->
+
+<div class="absolute">
+<p style="font-family: 'Courier New', monospace;">You might like</p>
+<div style="font-family: 'Courier New', monospace; line-height: 0.455em; font-size:12px; background-color:white-space;" th:each="eachSuggestion : ${historySuggestion}">
+  <a th:href="@{/documentResults(document = ${eachSuggestion})}" th:text="${eachSuggestion[0]}" />
+</div>
+<a th:href="@{/clearHistory(searcher = ${searcher}, movies_index=${movies_index})}">Clean history</a>
+</div>
+
+<div  style="background-color:white-space;" th:object="${results}">
+  <a id="genre" th:href="@{/documentResults(document = ${results.get(0)})}" th:text="${results[0][0]}" />
+  <p id="genre1" th:text="${results[0][5]}" />
+  
+    <a id="genre2" th:href="@{/documentResults(document = ${results.get(1)})}" th:text="${results[1][0]}" />
+	<p id="genre3" th:text="${results[1][5]}" />
+
+    <a id="genre4" th:href="@{/documentResults(document = ${results.get(2)})}" th:text="${results[2][0]}" />
+	<p id="genre5" th:text="${results[2][5]}" />
+
+
+    <a id="genre6" th:href="@{/documentResults(document = ${results.get(3)})}" th:text="${results[3][0]}" />
+	<p id="genre7" th:text="${results[3][5]}" />
+
+    <a id="genre8" th:href="@{/documentResults(document = ${results.get(4)})}" th:text="${results[4][0]}" />
+    <p id="genre9" th:text="${results[4][5]}" />
+
+    <a id="genre10" th:href="@{/documentResults(document = ${results.get(5)})}" th:text="${results[5][0]}" />
+    <p id="genre11" th:text="${results[5][5]}" />
+  
+    <a id="genre12" th:href="@{/documentResults(document = ${results.get(6)})}" th:text="${results[6][0]}" />
+    <p id="genre13" th:text="${results[6][5]}" />
+
+
+    <a id="genre14" th:href="@{/documentResults(document = ${results.get(7)})}" th:text="${results[7][0]}" />
+    <p id="genre15" th:text="${results[7][5]}" />
+  
+    <a id="genre16" th:href="@{/documentResults(document = ${results.get(8)})}" th:text="${results[8][0]}" />
+    <p id="genre17" th:text="${results[8][5]}" />
+
+    <a id="genre18" th:href="@{/documentResults(document = ${results.get(9)})}" th:text="${results[9][0]}" />
+    <p id="genre19" th:text="${results[9][5]}" />
+  
+
+</div>
+
+<script type="text/javascript">
+	function hightLight(){
+		let textToHighlight = document.getElementById("searcher").value;
+		console.log(textToHighlight);
+		let paragraph = document.getElementById("genre");
+		console.log("Called");
+		console.log(paragraph);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern = new RegExp(`${textToHighlight}`,"gi");
+		paragraph.innerHTML = paragraph.textContent.replace(pattern, match => `<mark>${match}</mark>`)
+		
+		let paragraph1 = document.getElementById("genre1");
+		console.log("Called");
+		console.log(paragraph1);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern1 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph1.innerHTML = paragraph1.textContent.replace(pattern1, match => `<mark>${match}</mark>`)
+		
+		let paragraph2 = document.getElementById("genre2");
+		console.log("Called");
+		console.log(paragraph2);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern2 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph2.innerHTML = paragraph2.textContent.replace(pattern2, match => `<mark>${match}</mark>`)
+		
+		let paragraph3 = document.getElementById("genre3");
+		console.log("Called");
+		console.log(paragraph3);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern3 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph3.innerHTML = paragraph3.textContent.replace(pattern3, match => `<mark>${match}</mark>`)
+		
+		let paragraph4 = document.getElementById("genre4");
+		console.log("Called");
+		console.log(paragraph4);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern4 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph4.innerHTML = paragraph4.textContent.replace(pattern4, match => `<mark>${match}</mark>`)
+		
+		let paragraph5 = document.getElementById("genre5");
+		console.log("Called");
+		console.log(paragraph5);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern5 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph5.innerHTML = paragraph5.textContent.replace(pattern5, match => `<mark>${match}</mark>`)
+		
+		let paragraph6 = document.getElementById("genre6");
+		console.log("Called");
+		console.log(paragraph6);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern6 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph6.innerHTML = paragraph6.textContent.replace(pattern6, match => `<mark>${match}</mark>`)
+		
+		let paragraph7 = document.getElementById("genre7");
+		console.log("Called");
+		console.log(paragraph7);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern7 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph7.innerHTML = paragraph7.textContent.replace(pattern7, match => `<mark>${match}</mark>`)
+		
+		let paragraph8 = document.getElementById("genre8");
+		console.log("Called");
+		console.log(paragraph8);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern8 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph8.innerHTML = paragraph8.textContent.replace(pattern8, match => `<mark>${match}</mark>`)
+		
+		let paragraph9 = document.getElementById("genre9");
+		console.log("Called");
+		console.log(paragraph9);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern9 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph9.innerHTML = paragraph9.textContent.replace(pattern9, match => `<mark>${match}</mark>`)
+		
+		let paragraph10 = document.getElementById("genre10");
+		console.log("Called");
+		console.log(paragraph10);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern10 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph10.innerHTML = paragraph10.textContent.replace(pattern10, match => `<mark>${match}</mark>`)
+		
+		let paragraph11 = document.getElementById("genre11");
+		console.log("Called");
+		console.log(paragraph11);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern11 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph11.innerHTML = paragraph11.textContent.replace(pattern11, match => `<mark>${match}</mark>`)
+		
+		let paragraph12 = document.getElementById("genre12");
+		console.log("Called");
+		console.log(paragraph12);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern12 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph12.innerHTML = paragraph12.textContent.replace(pattern12, match => `<mark>${match}</mark>`)
+		
+		let paragraph13 = document.getElementById("genre13");
+		console.log("Called");
+		console.log(paragraph13);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern13 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph13.innerHTML = paragraph13.textContent.replace(pattern13, match => `<mark>${match}</mark>`)
+		
+		let paragraph14 = document.getElementById("genre14");
+		console.log("Called");
+		console.log(paragraph14);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern14 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph14.innerHTML = paragraph14.textContent.replace(pattern14, match => `<mark>${match}</mark>`)
+		
+		let paragraph15 = document.getElementById("genre15");
+		console.log("Called");
+		console.log(paragraph15);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern15 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph15.innerHTML = paragraph15.textContent.replace(pattern15, match => `<mark>${match}</mark>`)
+		
+		
+		let paragraph16 = document.getElementById("genre16");
+		console.log("Called");
+		console.log(paragraph16);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern16 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph16.innerHTML = paragraph16.textContent.replace(pattern16, match => `<mark>${match}</mark>`)
+		
+		let paragraph17 = document.getElementById("genre17");
+		console.log("Called");
+		console.log(paragraph17);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern17 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph17.innerHTML = paragraph17.textContent.replace(pattern17, match => `<mark>${match}</mark>`)
+		
+		let paragraph18 = document.getElementById("genre18");
+		console.log("Called");
+		console.log(paragraph18);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern18 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph18.innerHTML = paragraph18.textContent.replace(pattern18, match => `<mark>${match}</mark>`)
+		
+		let paragraph19 = document.getElementById("genre18");
+		console.log("Called");
+		console.log(paragraph19);
+		textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+		let pattern19 = new RegExp(`${textToHighlight}`,"gi");
+		paragraph19.innerHTML = paragraph19.textContent.replace(pattern19, match => `<mark>${match}</mark>`)
+	}
+</script>
+
+<p style="text-align:center">
+<a th:href="@{/previous_results(searcher = ${searcher}, movies_index=${movies_index})}" class="previous round">&#8249;</a>
+<a th:href="@{/more_results(searcher = ${searcher}, movies_index=${movies_index})}" class="next round">&#8250;</a>
+</p>
+  </body>
+</html>
